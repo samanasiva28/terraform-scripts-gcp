@@ -1,0 +1,11 @@
+provider "google" {
+    project = "siva-sai-447213"
+    region = "us-central1"
+    credentials = file("key3.json")
+}
+resource "google_compute_disk" "disk-1" {
+    name =  "disk-1"
+    zone = "us-central1-a"
+    type = "pd-standard"
+    size =  10
+}
