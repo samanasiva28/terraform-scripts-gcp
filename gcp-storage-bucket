@@ -1,0 +1,27 @@
+provider "google" {
+    project = "siva-sai-447213"
+    region = "us-central1"
+    credentials = file("key.json")
+}
+resource "google_storage_bucket" "gcs-1" {
+    name = "nobel-return-28"
+    location = "US"
+    storage_class = "STANDARD"
+
+    labels = {
+        "env" = "dev"
+    }
+    # enable versioning
+    versioning{
+        enabled = true
+    }
+    lifecycle_rule {
+        action{
+            type =  "SetStorageClass"
+            storage_class = "NEARLINE"
+        }
+        condition {
+            age = 10
+        }
+    }
+}
