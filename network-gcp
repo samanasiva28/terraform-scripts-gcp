@@ -1,0 +1,23 @@
+provider "google" {
+    project = "siva-sai-447213"
+    region = "us-central1"
+    credentials = file("key1.json")
+}
+resource "google_compute_network" "network-a" {
+    name = "network-a"
+    auto_create_subnetworks = false
+}
+resource "google_compute_subnetwork" "subnetwork-a" {
+    name = "subnetwork-a"
+    region = "us-central1"
+    ip_cidr_range = "10.1.0.0/24"
+    network = google_compute_network.network-a.id
+}
+resource "google_compute_firewall" "allow-all" {
+    name = "allow-all"
+    network = google_compute_network.network-a.id
+    allow{
+        protocol = "icmp"
+    }
+    source_ranges = ["0.0.0.0/0"]
+}
